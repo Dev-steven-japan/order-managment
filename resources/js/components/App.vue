@@ -7,7 +7,7 @@
         <!-- Main Sidebar Container -->
         <Sidebar :ruta="ruta"></Sidebar>
 
-        <!-- Content Wrapper. Contains page content -->
+        <!-- Contenido Principal del Sitio Web -->
         <div class="content-wrapper">
             <transition name="slide-fade" mode="out-in">
                 <router-view></router-view>
