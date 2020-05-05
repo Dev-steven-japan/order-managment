@@ -14,7 +14,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-tools">
-                        <router-link class="btn btn-info btn-sm" :to="'/'">
+                        <router-link class="btn btn-info btn-sm" :to="'/usuario/crear'">
                             <i class="fas fa-plus-square"></i> Nuevo Usuario
                         </router-link>
                     </div>
@@ -32,7 +32,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Nombre</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillBsqUsuario.cNombre">
+                                                    <input type="text" class="form-control" v-model="fillBsqUsuario.cNombre" @keyup.enter="getListarUsuarios">
                                                 </div>
                                             </div>
                                         </div>
@@ -40,7 +40,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Usuario</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillBsqUsuario.cUsuario">
+                                                    <input type="text" class="form-control" v-model="fillBsqUsuario.cUsuario" @keyup.enter="getListarUsuarios">
                                                 </div>
                                             </div>
                                         </div>
@@ -48,7 +48,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Correo Electronico</label>
                                                 <div class="col-md-9">
-                                                    <input type="email" class="form-control" v-model="fillBsqUsuario.cCorreo">
+                                                    <input type="email" class="form-control" v-model="fillBsqUsuario.cCorreo" @keyup.enter="getListarUsuarios">
                                                 </div>
                                             </div>
                                         </div>
@@ -75,7 +75,7 @@
                             <div class="card-footer">
                                 <div class="row">
                                     <div class="col-md-4 offset-4">
-                                        <button class="btn btn-flat btn-info btnWidth" @click.prevent="getListarUsuarios">Buscar</button>
+                                        <button class="btn btn-flat btn-info btnWidth" @click.prevent="getListarUsuarios" v-loading.fullscreen.lock="fullscreenLoading">Buscar</button>
                                         <button class="btn btn-flat btn-default btnWidth" @click.prevent="limpiarCriteriosBsq">Limpiar</button>
                                     </div>
                                 </div>
@@ -180,6 +180,7 @@
                     {value: 'A', label: 'Activo'},
                     {value: 'I', label: 'Inactivo'}
                 ],
+                fullscreenLoading: false,
                 pageNumber: 0,
                 perPage: 5
             }
@@ -240,6 +241,8 @@
                 this.listUsuarios   =   [];
             },
             getListarUsuarios(){
+                this.fullscreenLoading = true;
+
                 var url = '/administracion/usuario/getListarUsuarios'
                 axios.get(url, {
                     params: {
@@ -249,8 +252,9 @@
                         'cEstado'   :   this.fillBsqUsuario.cEstado,
                     }
                 }).then(response => {
-                    console.log(response.data);
+                    this.inicializarPaginacion();
                     this.listUsuarios   =   response.data;
+                    this.fullscreenLoading = false;
                 })
             },
             nextPage() {
@@ -261,6 +265,9 @@
             },
             selectPage(page){
                 this.pageNumber = page;
+            },
+            inicializarPaginacion(){
+                this.pageNumber = 0;
             }
         }
     }

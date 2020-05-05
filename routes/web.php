@@ -11,8 +11,12 @@
 |
 */
 
+Route::get('/administracion/usuario/getListarUsuarios', 'Administracion\UsersController@getListarUsuarios');
+Route::post('/administracion/usuario/setRegistrarUsuario', 'Administracion\UsersController@setRegistrarUsuario');
+
+Route::post('/archivo/setRegistrarArchivo', 'FilesController@setRegistrarArchivo');
+
 Route::get('/{optional?}', function () {
     return view('app');
-})->name('basepath');
-
-Route::get('/administracion/usuario/getListarUsuarios', 'Administracion\UsersController@getListarUsuarios');
+})->name('basepath')
+  ->where('optional', '.*');
