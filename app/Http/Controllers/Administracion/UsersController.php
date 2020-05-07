@@ -106,4 +106,21 @@ class UsersController extends Controller
                                                                     $oFotografia
                                                                 ]);
     }
+
+    public function setCambiarEstadoUsuario(Request $request)
+    {
+        if(!$request->ajax()) return redirect('/');
+
+        $nIdUsuario  =   $request->nIdUsuario;
+        $cEstado     =   $request->cEstado;
+
+        $nIdUsuario  =   ($nIdUsuario   ==  NULL) ? ($nIdUsuario   =   0) :   $nIdUsuario;
+        $cEstado     =   ($cEstado   ==  NULL) ? ($cEstado   =   0) :   $cEstado;
+
+        DB::select('call sp_Usuario_setCambiarEstadoUsuario (?, ?)',
+                                                                [
+                                                                    $nIdUsuario,
+                                                                    $cEstado
+                                                                ]);
+    }
 }
