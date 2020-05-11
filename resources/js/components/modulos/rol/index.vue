@@ -14,7 +14,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-tools">
-                        <router-link class="btn btn-info btn-sm" :to="'/usuario/crear'">
+                        <router-link class="btn btn-info btn-sm" :to="'/rol/crear'">
                             <i class="fas fa-plus-square"></i> Nuevo Rol
                         </router-link>
                     </div>
