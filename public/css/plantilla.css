@@ -45,3 +45,8 @@
 .user-block {
     list-style: none;
 }
+
+.scrollTable {
+    max-height: 350px !important;
+    overflow: auto !important;
+}
