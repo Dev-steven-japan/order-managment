@@ -25,6 +25,12 @@ export default new Router({
             component: require('./components/modulos/usuario/view').default,
             props: true
         },
+        {
+            path: '/usuario/permiso/:id',
+            name: 'usuario.permiso',
+            component: require('./components/modulos/usuario/permission').default,
+            props: true
+        },
 
         { path: '/rol', component: require('./components/modulos/rol/index').default },
         { path: '/rol/crear', component: require('./components/modulos/rol/create').default },

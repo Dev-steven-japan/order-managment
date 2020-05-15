@@ -131,7 +131,7 @@
                                                         <router-link class="btn btn-flat btn-info btn-sm" :to="{name:'usuario.editar', params:{id: item.id}}">
                                                             <i class="fas fa-pencil-alt"></i> Editar
                                                         </router-link>
-                                                        <router-link class="btn btn-flat btn-success btn-sm" :to="'/'">
+                                                        <router-link class="btn btn-flat btn-success btn-sm" :to="{name:'usuario.permiso', params:{id: item.id}}">
                                                             <i class="fas fa-key"></i> Permiso
                                                         </router-link>
                                                         <button class="btn btn-flat btn-danger btn-sm" @click.prevent="setCambiarEstadoUsuario(1, item.id)">

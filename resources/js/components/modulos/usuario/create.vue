@@ -263,6 +263,9 @@
                 if (!this.fillCrearUsuario.cContrasena) {
                     this.mensajeError.push("La Contraseña es un campo obligatorio")
                 }
+                if (!this.fillEditarUsuario.nIdRol) {
+                    this.mensajeError.push("Debe seleccionar el Rol, es un campo obligatorio")
+                }
 
                 if (this.mensajeError.length) {
                     this.error = 1;

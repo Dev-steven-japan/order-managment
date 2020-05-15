@@ -143,4 +143,20 @@ class UsersController extends Controller
                                                         ]);
 
     }
+
+    public function getRolByUsuario(Request $request)
+    {
+        if(!$request->ajax()) return redirect('/');
+
+        $nIdUsuario  =   $request->nIdUsuario;
+
+        $nIdUsuario =   ($nIdUsuario   ==  NULL) ? ($nIdUsuario   =   '') :   $nIdUsuario;
+
+        $rpta   =   DB::select('call sp_Usuario_getRolByUsuario (?)',
+                                                [
+                                                    $nIdUsuario
+                                                ]);
+
+        return $rpta;
+    }
 }
