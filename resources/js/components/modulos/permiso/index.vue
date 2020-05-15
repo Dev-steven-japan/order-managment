@@ -75,7 +75,7 @@
                                                 <td v-text="item.name"></td>
                                                 <td v-text="item.slug"></td>
                                                 <td>
-                                                    <router-link class="btn btn-flat btn-info btn-sm" :to="{name:'rol.editar', params:{id: item.id}}">
+                                                    <router-link class="btn btn-flat btn-info btn-sm" :to="{name:'permiso.editar', params:{id: item.id}}">
                                                         <i class="fas fa-pencil-alt"></i> Editar
                                                     </router-link>
                                                 </td>
