@@ -5105,6 +5105,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -5115,8 +5132,10 @@ __webpack_require__.r(__webpack_exports__);
         cUsuario: '',
         cCorreo: '',
         cContrasena: '',
-        oFotografia: ''
+        oFotografia: '',
+        nIdRol: ''
       },
+      listRoles: [],
       form: new FormData(),
       fullscreenLoading: false,
       modalShow: false,
@@ -5132,6 +5151,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   computed: {},
+  mounted: function mounted() {
+    this.getListarRoles();
+  },
   methods: {
     limpiarCriterios: function limpiarCriterios() {
       this.fillCrearUsuario.cPrimerNombre = '';
@@ -5144,6 +5166,16 @@ __webpack_require__.r(__webpack_exports__);
     },
     abrirModal: function abrirModal() {
       this.modalShow = !this.modalShow;
+    },
+    getListarRoles: function getListarRoles() {
+      var _this = this;
+
+      this.fullscreenLoading = true;
+      var url = '/administracion/rol/getListarRoles';
+      axios.get(url).then(function (response) {
+        _this.listRoles = response.data;
+        _this.fullscreenLoading = false;
+      });
     },
     getFile: function getFile(e) {
       this.fillCrearUsuario.oFotografia = e.target.files[0];
@@ -5163,7 +5195,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     setRegistrarArchivo: function setRegistrarArchivo() {
-      var _this = this;
+      var _this2 = this;
 
       this.form.append('file', this.fillCrearUsuario.oFotografia);
       var config = {
@@ -5175,11 +5207,11 @@ __webpack_require__.r(__webpack_exports__);
       axios.post(url, this.form, config).then(function (response) {
         var nIdFile = response.data[0].nIdFile;
 
-        _this.setGuardarUsuario(nIdFile);
+        _this2.setGuardarUsuario(nIdFile);
       });
     },
     setGuardarUsuario: function setGuardarUsuario(nIdFile) {
-      var _this2 = this;
+      var _this3 = this;
 
       var url = '/administracion/usuario/setRegistrarUsuario';
       axios.post(url, {
@@ -5191,10 +5223,21 @@ __webpack_require__.r(__webpack_exports__);
         'cContrasena': this.fillCrearUsuario.cContrasena,
         'oFotografia': nIdFile
       }).then(function (response) {
-        console.log("Registro Usuario exitosamente");
-        _this2.fullscreenLoading = false;
+        // console.log(response.data);
+        _this3.setEditarRolByUsuario(response.data);
+      });
+    },
+    setEditarRolByUsuario: function setEditarRolByUsuario(nIdUsuario) {
+      var _this4 = this;
 
-        _this2.$router.push('/usuario');
+      var url = '/administracion/usuario/setEditarRolByUsuario';
+      axios.post(url, {
+        'nIdUsuario': nIdUsuario,
+        'nIdRol': this.fillCrearUsuario.nIdRol
+      }).then(function (response) {
+        _this4.fullscreenLoading = false;
+
+        _this4.$router.push('/usuario');
       });
     },
     validarRegistrarUsuario: function validarRegistrarUsuario() {
@@ -109276,6 +109319,51 @@ var render = function() {
                                 expression: "fillCrearUsuario.cContrasena"
                               }
                             })
+                          ],
+                          1
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("div", { staticClass: "form-group row" }, [
+                        _c(
+                          "label",
+                          { staticClass: "col-md-3 col-form-label" },
+                          [_vm._v("Rol")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "col-md-9" },
+                          [
+                            _c(
+                              "el-select",
+                              {
+                                attrs: {
+                                  placeholder: "Seleccione un Rol",
+                                  clearable: ""
+                                },
+                                model: {
+                                  value: _vm.fillCrearUsuario.nIdRol,
+                                  callback: function($$v) {
+                                    _vm.$set(
+                                      _vm.fillCrearUsuario,
+                                      "nIdRol",
+                                      $$v
+                                    )
+                                  },
+                                  expression: "fillCrearUsuario.nIdRol"
+                                }
+                              },
+                              _vm._l(_vm.listRoles, function(item) {
+                                return _c("el-option", {
+                                  key: item.id,
+                                  attrs: { label: item.name, value: item.id }
+                                })
+                              }),
+                              1
+                            )
                           ],
                           1
                         )

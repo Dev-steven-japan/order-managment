@@ -56,7 +56,7 @@ class UsersController extends Controller
         $cContrasena    =   ($cContrasena   ==  NULL) ? ($cContrasena   =   '') :   $cContrasena;
         $oFotografia    =   ($oFotografia   ==  NULL) ? ($oFotografia   =   NULL) :   $oFotografia;
 
-        DB::select('call sp_Usuario_setRegistrarUsuario (?, ?, ?, ?, ?, ?, ?)',
+        $rpta   =   DB::select('call sp_Usuario_setRegistrarUsuario (?, ?, ?, ?, ?, ?, ?)',
                                                                 [
                                                                     $cPrimerNombre,
                                                                     $cSegundoNombre,
@@ -66,6 +66,8 @@ class UsersController extends Controller
                                                                     $cContrasena,
                                                                     $oFotografia
                                                                 ]);
+
+        return $rpta[0]->nIdUsuario;
     }
 
     public function setEditarUsuario(Request $request)
@@ -122,5 +124,23 @@ class UsersController extends Controller
                                                                     $nIdUsuario,
                                                                     $cEstado
                                                                 ]);
+    }
+
+    public function setEditarRolByUsuario(Request $request)
+    {
+        if(!$request->ajax()) return redirect('/');
+
+        $nIdUsuario  =   $request->nIdUsuario;
+        $nIdRol      =   $request->nIdRol;
+
+        $nIdUsuario =   ($nIdUsuario   ==  NULL) ? ($nIdUsuario   =   '') :   $nIdUsuario;
+        $nIdRol     =   ($nIdRol   ==  NULL) ? ($nIdRol   =   '') :   $nIdRol;
+
+        DB::select('call sp_Usuario_setEditarRolByUsuario (?, ?)',
+                                                        [
+                                                            $nIdUsuario,
+                                                            $nIdRol
+                                                        ]);
+
     }
 }
