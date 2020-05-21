@@ -130,6 +130,8 @@
                 },
                 listPermisos: [],
                 listPermisosFilter: [],
+                listRolPermisosByUsuario: [],
+                listRolPermisosByUsuarioFilter: [],
                 fullscreenLoading: false,
                 modalShow: false,
                 mostrarModal: {
@@ -169,6 +171,13 @@
                     this.fillEditarRol.cNombre  =   response.data[0].name;
                     this.fillEditarRol.cSlug    =   response.data[0].slug;
                     this.fullscreenLoading = false;
+                }).catch(error => {
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        this.fullscreenLoading = false;
+                    }
                 })
             },
             getListarPermisosByRol(){
@@ -180,6 +189,13 @@
                 }).then( response => {
                     this.listPermisos = response.data;
                     this.filterPermisosByRol();
+                }).catch(error => {
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        this.fullscreenLoading = false;
+                    }
                 })
             },
             filterPermisosByRol() {
@@ -210,13 +226,44 @@
                     'cSlug'                 :   this.fillEditarRol.cSlug,
                     'listPermisosFilter'    :   this.listPermisosFilter
                 }).then(response => {
-                    this.fullscreenLoading = false;
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Se actualizo el rol correctamente',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
+                    this.getListarRolPermisosByUsuario();
+                }).catch(error => {
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        this.fullscreenLoading = false;
+                    }
+                })
+            },
+            getListarRolPermisosByUsuario(){
+                var ruta = '/administracion/usuario/getListarRolPermisosByUsuario'
+                axios.get(ruta).then( response => {
+                    this.listRolPermisosByUsuario = response.data;
+                    this.filterListarRolPermisosByUsuario();
+                }).catch(error => {
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        this.fullscreenLoading = false;
+                    }
+                })
+            },
+            filterListarRolPermisosByUsuario() {
+                let me = this;
+                me.listRolPermisosByUsuarioFilter = [];
+                me.listRolPermisosByUsuario.map(function(x, y){
+                    me.listRolPermisosByUsuarioFilter.push(x.slug)
+                })
+                sessionStorage.setItem('listRolPermisosByUsuario', JSON.stringify(me.listRolPermisosByUsuarioFilter));
+                EventBus.$emit('notifyRolPermisosByUsuario', me.listRolPermisosByUsuarioFilter);
+                this.fullscreenLoading = false;
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Se actualizo el rol correctamente',
+                    showConfirmButton: false,
+                    timer: 1500
                 })
             },
             validarEditarRolPermisos(){

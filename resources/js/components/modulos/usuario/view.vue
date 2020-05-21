@@ -206,6 +206,13 @@
                     this.getUsuarioVer(response.data[0])
 
                     this.fullscreenLoading = false;
+                }).catch(error => {
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        this.fullscreenLoading = false;
+                    }
                 })
             },
             getUsuarioEditar(data){
@@ -232,6 +239,13 @@
                 }).then(response => {
                     this.fillVerUsuario.cNombreRol   =   (response.data.length == 0) ? '' : response.data[0].name;
                     this.fullscreenLoading = false;
+                }).catch(error => {
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        this.fullscreenLoading = false;
+                    }
                 })
             },
             abrirModal(){
@@ -260,6 +274,13 @@
                 axios.post(url, this.form, config).then(response =>{
                     var nIdFile = response.data[0].nIdFile;
                     this.setGuardarUsuario(nIdFile);
+                }).catch(error => {
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        this.fullscreenLoading = false;
+                    }
                 })
             },
             setGuardarUsuario(nIdFile){
@@ -275,7 +296,13 @@
                     'oFotografia'   :   nIdFile
                 }).then(response => {
                     this.getRefrescarUsuarioAutenticado();
-
+                }).catch(error => {
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        this.fullscreenLoading = false;
+                    }
                 })
             },
             getRefrescarUsuarioAutenticado() {
@@ -291,6 +318,13 @@
                         showConfirmButton: false,
                         timer: 1500
                     })
+                }).catch(error => {
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        this.fullscreenLoading = false;
+                    }
                 })
             },
             validarRegistrarUsuario(){

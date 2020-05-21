@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Administracion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
@@ -227,5 +228,25 @@ class UsersController extends Controller
             // capturara algun error ocurrido en el "try"
             DB::rollBack();
         }
+    }
+
+    public function getListarRolPermisosByUsuario(Request $request)
+    {
+        if(!$request->ajax()) return redirect('/');
+
+        $nIdUsuario  =   $request->nIdUsuario;
+
+        if (!$nIdUsuario) {
+            $nIdUsuario =   Auth::id();
+        }
+
+        $nIdUsuario =   ($nIdUsuario   ==  NULL) ? ($nIdUsuario   =   0) :   $nIdUsuario;
+
+        $rpta   =   DB::select('call sp_Usuario_getListarRolPermisosByUsuario (?)',
+                                                [
+                                                    $nIdUsuario
+                                                ]);
+
+        return $rpta;
     }
 }

@@ -125,6 +125,13 @@
                     this.fillEditarPermiso.cNombre =   response.data[0].name;
                     this.fillEditarPermiso.cSlug   =   response.data[0].slug;
                     this.fullscreenLoading = false;
+                }).catch(error => {
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        this.fullscreenLoading = false;
+                    }
                 })
             },
             setEditarPermiso(){
@@ -147,6 +154,13 @@
                         showConfirmButton: false,
                         timer: 1500
                     })
+                }).catch(error => {
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        this.fullscreenLoading = false;
+                    }
                 })
             },
             validarEditarPermiso(){

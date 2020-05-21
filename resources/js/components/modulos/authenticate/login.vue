@@ -55,6 +55,8 @@
                     cEmail: '',
                     cContrasena: ''
                 },
+                listRolPermisosByUsuario: [],
+                listRolPermisosByUsuarioFilter: [],
                 fullscreenLoading: false,
                 error: 0,
                 mensajeError: []
@@ -71,15 +73,36 @@
                     'cEmail'        : this.fillLogin.cEmail,
                     'cContrasena'   : this.fillLogin.cContrasena
                 }).then(response => {
-                    console.log(response.data)
+                    // console.log(response.data)
                     if (response.data.code == 401) {
                         this.loginFailed();
                     }
                     if (response.data.code == 200) {
-                        this.loginSuccess();
+                        // this.loginSuccess();
+                        this.getListarRolPermisosByUsuario(response.data.authUser)
                     }
                     this.fullscreenLoading = false;
                 })
+            },
+            getListarRolPermisosByUsuario(authUser){
+                var ruta = '/administracion/usuario/getListarRolPermisosByUsuario'
+                axios.get(ruta,{
+                    params: {
+                        'nIdUsuario'    :   authUser.id
+                    }
+                }).then( response => {
+                    this.listRolPermisosByUsuario = response.data;
+                    this.filterListarRolPermisosByUsuario(authUser);
+                })
+            },
+            filterListarRolPermisosByUsuario(authUser) {
+                let me = this;
+                me.listRolPermisosByUsuario.map(function(x, y){
+                    me.listRolPermisosByUsuarioFilter.push(x.slug)
+                })
+                sessionStorage.setItem('listRolPermisosByUsuario', JSON.stringify(me.listRolPermisosByUsuarioFilter));
+                sessionStorage.setItem('authUser', JSON.stringify(authUser));
+                this.loginSuccess();
             },
             validarLogin() {
                 this.error = 0;

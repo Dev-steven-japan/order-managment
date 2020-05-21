@@ -192,6 +192,13 @@
                 axios.get(url).then(response => {
                     this.listRoles   =   response.data;
                     this.fullscreenLoading = false;
+                }).catch(error => {
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        this.fullscreenLoading = false;
+                    }
                 })
             },
             getFile(e){
@@ -217,6 +224,13 @@
                 axios.post(url, this.form, config).then(response =>{
                     var nIdFile = response.data[0].nIdFile;
                     this.setGuardarUsuario(nIdFile);
+                }).catch(error => {
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        this.fullscreenLoading = false;
+                    }
                 })
             },
             setGuardarUsuario(nIdFile){
@@ -232,6 +246,13 @@
                 }).then(response => {
                     // console.log(response.data);
                     this.setEditarRolByUsuario(response.data);
+                }).catch(error => {
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        this.fullscreenLoading = false;
+                    }
                 })
             },
             setEditarRolByUsuario(nIdUsuario){
@@ -242,6 +263,13 @@
                 }).then(response => {
                     this.fullscreenLoading = false;
                     this.$router.push('/usuario');
+                }).catch(error => {
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        this.fullscreenLoading = false;
+                    }
                 })
             },
             validarRegistrarUsuario(){

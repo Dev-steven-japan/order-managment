@@ -14,9 +14,11 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-tools">
-                        <router-link class="btn btn-info btn-sm" :to="'/usuario/crear'">
-                            <i class="fas fa-plus-square"></i> Nuevo Usuario
-                        </router-link>
+                        <template v-if="listRolPermisosByUsuario.includes('usuario.crear')">
+                            <router-link class="btn btn-info btn-sm" :to="{name: 'usuario.crear'}">
+                                <i class="fas fa-plus-square"></i> Nuevo Usuario
+                            </router-link>
+                        </template>
                     </div>
                 </div>
                 <div class="card-body">
@@ -124,24 +126,34 @@
                                                     </template>
                                                 </td>
                                                 <td>
-                                                    <router-link class="btn btn-flat btn-primary btn-sm" :to="{name:'usuario.ver', params:{id: item.id}}">
-                                                        <i class="fas fa-folder"></i> Ver
-                                                    </router-link>
+                                                    <template v-if="listRolPermisosByUsuario.includes('usuario.ver')">
+                                                        <router-link class="btn btn-flat btn-primary btn-sm" :to="{name:'usuario.ver', params:{id: item.id}}">
+                                                            <i class="fas fa-folder"></i> Ver
+                                                        </router-link>
+                                                    </template>
                                                     <template v-if="item.state == 'A'">
-                                                        <router-link class="btn btn-flat btn-info btn-sm" :to="{name:'usuario.editar', params:{id: item.id}}">
-                                                            <i class="fas fa-pencil-alt"></i> Editar
-                                                        </router-link>
-                                                        <router-link class="btn btn-flat btn-success btn-sm" :to="{name:'usuario.permiso', params:{id: item.id}}">
-                                                            <i class="fas fa-key"></i> Permiso
-                                                        </router-link>
-                                                        <button class="btn btn-flat btn-danger btn-sm" @click.prevent="setCambiarEstadoUsuario(1, item.id)">
-                                                            <i class="fas fa-trash"></i> Desactivar
-                                                        </button>
+                                                        <template v-if="listRolPermisosByUsuario.includes('usuario.editar')">
+                                                            <router-link class="btn btn-flat btn-info btn-sm" :to="{name:'usuario.editar', params:{id: item.id}}">
+                                                                <i class="fas fa-pencil-alt"></i> Editar
+                                                            </router-link>
+                                                        </template>
+                                                        <template v-if="listRolPermisosByUsuario.includes('usuario.permiso')">
+                                                            <router-link class="btn btn-flat btn-success btn-sm" :to="{name:'usuario.permiso', params:{id: item.id}}">
+                                                                <i class="fas fa-key"></i> Permiso
+                                                            </router-link>
+                                                        </template>
+                                                        <template v-if="listRolPermisosByUsuario.includes('usuario.desactivar')">
+                                                            <button class="btn btn-flat btn-danger btn-sm" @click.prevent="setCambiarEstadoUsuario(1, item.id)">
+                                                                <i class="fas fa-trash"></i> Desactivar
+                                                            </button>
+                                                        </template>
                                                     </template>
                                                     <template v-else>
-                                                        <button class="btn btn-flat btn-danger btn-sm" @click.prevent="setCambiarEstadoUsuario(2, item.id)">
-                                                            <i class="fas fa-check"></i> Activar
-                                                        </button>
+                                                        <template v-if="listRolPermisosByUsuario.includes('usuario.activar')">
+                                                            <button class="btn btn-flat btn-danger btn-sm" @click.prevent="setCambiarEstadoUsuario(2, item.id)">
+                                                                <i class="fas fa-check"></i> Activar
+                                                            </button>
+                                                        </template>
                                                     </template>
                                                 </td>
                                             </tr>
@@ -191,6 +203,7 @@
                     {value: 'A', label: 'Activo'},
                     {value: 'I', label: 'Inactivo'}
                 ],
+                listRolPermisosByUsuario: JSON.parse(sessionStorage.getItem('listRolPermisosByUsuario')),
                 fullscreenLoading: false,
                 pageNumber: 0,
                 perPage: 5
@@ -266,6 +279,13 @@
                     this.inicializarPaginacion();
                     this.listUsuarios   =   response.data;
                     this.fullscreenLoading = false;
+                }).catch(error => {
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        this.fullscreenLoading = false;
+                    }
                 })
             },
             nextPage() {
@@ -304,6 +324,13 @@
                                 timer: 1500
                             })
                             this.getListarUsuarios();
+                        }).catch(error => {
+                            if (error.response.status == 401) {
+                                this.$router.push({name: 'login'})
+                                location.reload();
+                                sessionStorage.clear();
+                                this.fullscreenLoading = false;
+                            }
                         })
                     }
                 })
