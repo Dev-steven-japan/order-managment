@@ -5,7 +5,7 @@
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        <Sidebar :ruta="ruta"></Sidebar>
+        <Sidebar :ruta="ruta" :usuario="authUser"></Sidebar>
 
         <!-- Contenido Principal del Sitio Web -->
         <div class="content-wrapper">
@@ -30,8 +30,20 @@
     import Sidebar from './plantilla/Sidebar'
     import Footer from './plantilla/Footer'
     export default {
-        props: ['ruta'],
-        components: {Navbar, Sidebar, Footer}
+        props: ['ruta', 'usuario'],
+        components: {Navbar, Sidebar, Footer},
+        data() {
+            return {
+                authUser: this.usuario
+            }
+        },
+        mounted() {
+            EventBus.$on('verifyAuthenticatedUser', data => {
+                console.log("Evento ejecutado desde el Componente App.vue")
+                // console.log(data);
+                this.authUser = data;
+            })
+        },
     }
 </script>
 

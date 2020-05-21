@@ -4,15 +4,48 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 export default new Router({
-    routes: [
-        { path: '/', component: require('./components/modulos/dashboard/index').default },
-        { path: '/pedido', component: require('./components/modulos/pedido/index').default },
-        { path: '/cliente', component: require('./components/modulos/cliente/index').default },
-        { path: '/categoria', component: require('./components/modulos/categoria/index').default },
-        { path: '/producto', component: require('./components/modulos/producto/index').default },
+    routes: [{
+            path: '/login',
+            name: 'login',
+            component: require('./components/modulos/authenticate/login').default
+        },
 
-        { path: '/usuario', component: require('./components/modulos/usuario/index').default },
-        { path: '/usuario/crear', component: require('./components/modulos/usuario/create').default },
+        {
+            path: '/',
+            name: 'dashboard.index',
+            component: require('./components/modulos/dashboard/index').default
+        },
+        {
+            path: '/pedido',
+            name: 'pedido.index',
+            component: require('./components/modulos/pedido/index').default
+        },
+        {
+            path: '/cliente',
+            name: 'cliente.index',
+            component: require('./components/modulos/cliente/index').default
+        },
+        {
+            path: '/categoria',
+            name: 'categoria.index',
+            component: require('./components/modulos/categoria/index').default
+        },
+        {
+            path: '/producto',
+            name: 'producto.index',
+            component: require('./components/modulos/producto/index').default
+        },
+
+        {
+            path: '/usuario',
+            name: 'usuario.index',
+            component: require('./components/modulos/usuario/index').default
+        },
+        {
+            path: '/usuario/crear',
+            name: 'usuario.crear',
+            component: require('./components/modulos/usuario/create').default
+        },
         {
             path: '/usuario/editar/:id',
             name: 'usuario.editar',
@@ -32,8 +65,16 @@ export default new Router({
             props: true
         },
 
-        { path: '/rol', component: require('./components/modulos/rol/index').default },
-        { path: '/rol/crear', component: require('./components/modulos/rol/create').default },
+        {
+            path: '/rol',
+            name: 'rol.index',
+            component: require('./components/modulos/rol/index').default
+        },
+        {
+            path: '/rol/crear',
+            name: 'rol.crear',
+            component: require('./components/modulos/rol/create').default
+        },
         {
             path: '/rol/editar/:id',
             name: 'rol.editar',
@@ -41,8 +82,16 @@ export default new Router({
             props: true
         },
 
-        { path: '/permiso', component: require('./components/modulos/permiso/index').default },
-        { path: '/permiso/crear', component: require('./components/modulos/permiso/create').default },
+        {
+            path: '/permiso',
+            name: 'permiso.index',
+            component: require('./components/modulos/permiso/index').default
+        },
+        {
+            path: '/permiso/crear',
+            name: 'permiso.crear',
+            component: require('./components/modulos/permiso/create').default
+        },
         {
             path: '/permiso/editar/:id',
             name: 'permiso.editar',
@@ -50,7 +99,11 @@ export default new Router({
             props: true
         },
 
-        { path: '/reporte', component: require('./components/modulos/reporte/index').default }
+        {
+            path: '/reporte',
+            name: 'reporte.index',
+            component: require('./components/modulos/reporte/index').default
+        }
     ],
     mode: 'history',
     linkActiveClass: 'active'

@@ -26,7 +26,7 @@
                             </div>
 
                             <h3 class="profile-username text-center"> {{ cNombreCompleto }} </h3>
-                            <p class="text-muted text-center">Vendedor</p>
+                            <p class="text-muted text-center">{{fillVerUsuario.cNombreRol}}</p>
                         </div>
                     <!-- /.card-body -->
                     </div>
@@ -166,7 +166,8 @@
                     cCorreo: '',
                     cContrasena: '',
                     oFotografia: '',
-                    cRutaArchivo: ''
+                    cRutaArchivo: '',
+                    cNombreRol: ''
                 },
                 form : new FormData,
                 fullscreenLoading: false,
@@ -184,6 +185,7 @@
         },
         mounted() {
             this.getUsuarioById();
+            this.getRolByUsuario();
         },
         computed: {
             cNombreCompleto(){
@@ -220,6 +222,17 @@
                 this.fillVerUsuario.cUsuario         =   data.username;
                 this.fillVerUsuario.cCorreo          =   data.email;
                 this.fillVerUsuario.cRutaArchivo     =   data.profile_image;
+            },
+            getRolByUsuario(){
+                var url = '/administracion/usuario/getRolByUsuario'
+                axios.get(url,{
+                    params: {
+                        'nIdUsuario'    :   this.fillEditarUsuario.nIdUsuario
+                    }
+                }).then(response => {
+                    this.fillVerUsuario.cNombreRol   =   (response.data.length == 0) ? '' : response.data[0].name;
+                    this.fullscreenLoading = false;
+                })
             },
             abrirModal(){
                 this.modalShow = !this.modalShow;
@@ -261,6 +274,15 @@
                     'cContrasena'   :   this.fillEditarUsuario.cContrasena,
                     'oFotografia'   :   nIdFile
                 }).then(response => {
+                    this.getRefrescarUsuarioAutenticado();
+
+                })
+            },
+            getRefrescarUsuarioAutenticado() {
+                var url = '/authenticate/getRefrescarUsuarioAutenticado'
+                axios.get(url).then(response => {
+                    // console.log(response.data);
+                    EventBus.$emit('verifyAuthenticatedUser', response.data);
                     this.fullscreenLoading = false;
                     this.getUsuarioById();
                     Swal.fire({
