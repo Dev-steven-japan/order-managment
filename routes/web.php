@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/archivo/setRegistrarArchivo', 'FilesController@setRegistrarArchivo');
 
     Route::get('/configuracion/categoria/getListarCategorias', 'Configuracion\CategoriaController@getListarCategorias');
+    Route::post('/configuracion/categoria/setRegistrarCategoria', 'Configuracion\CategoriaController@setRegistrarCategoria');
 });
 
 Route::get('/{optional?}', function () {

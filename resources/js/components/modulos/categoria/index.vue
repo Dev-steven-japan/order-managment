@@ -40,7 +40,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label class="col-md-3 col-form-label">Categoria</label>
+                                                <label class="col-md-3 col-form-label">Descripción</label>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control" v-model="fillBsqCategoria.cDescripcion" @keyup.enter="getListarCategorias">
                                                 </div>

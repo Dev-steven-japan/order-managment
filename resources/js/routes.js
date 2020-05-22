@@ -57,6 +57,7 @@ export const rutas = [{
             verificarAcceso(to, from, next);
         }
     },
+
     {
         path: '/categoria',
         name: 'categoria.index',
@@ -65,6 +66,15 @@ export const rutas = [{
             verificarAcceso(to, from, next);
         }
     },
+    {
+        path: '/categoria/crear',
+        name: 'categoria.crear',
+        component: require('./components/modulos/categoria/create').default,
+        beforeEnter: (to, from, next) => {
+            verificarAcceso(to, from, next);
+        }
+    },
+
     {
         path: '/producto',
         name: 'producto.index',
