@@ -30,7 +30,15 @@ function verificarAcceso(to, from, next) {
 export const rutas = [{
         path: '/login',
         name: 'login',
-        component: require('./components/modulos/authenticate/login').default
+        component: require('./components/modulos/authenticate/login').default,
+        beforeEnter: (to, from, next) => {
+            let authUser = JSON.parse(sessionStorage.getItem('authUser'));
+            if (authUser) {
+                next({ name: 'dashboard.index' });
+            } else {
+                next();
+            }
+        }
     },
 
     {
