@@ -29,6 +29,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/administracion/permiso/setEditarPermiso', 'Administracion\PermissionController@setEditarPermiso');
 
     Route::post('/archivo/setRegistrarArchivo', 'FilesController@setRegistrarArchivo');
+
+    Route::get('/configuracion/categoria/getListarCategorias', 'Configuracion\CategoriaController@getListarCategorias');
 });
 
 Route::get('/{optional?}', function () {

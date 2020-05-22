@@ -10,17 +10,19 @@ class FilesController extends Controller
 {
     public function setRegistrarArchivo(Request $request)
     {
-        $file   = $request->file;
+        $file       =   $request->file;
         $bandera    =   str_random(10);
         $filename   =   $file->getClientOriginalName();
         $fileserver =   $bandera .'_'. $filename;
+        $nIdAuthUser=   Auth::id();
 
         Storage::putFileAs('public/users', $file, $fileserver);
 
-        $rpta       =   DB::select('call sp_Archivo_setRegistrarArchivo (?, ?)',
+        $rpta       =   DB::select('call sp_Archivo_setRegistrarArchivo (?, ?, ?)',
                                                                 [
                                                                     asset('storage/users/'. $fileserver),
-                                                                    $filename
+                                                                    $filename,
+                                                                    $nIdAuthUser
                                                                 ]);
         return $rpta;
     }
