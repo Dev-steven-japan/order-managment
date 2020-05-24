@@ -100,6 +100,14 @@ export const rutas = [{
             verificarAcceso(to, from, next);
         }
     },
+    {
+        path: '/producto/crear',
+        name: 'producto.crear',
+        component: require('./components/modulos/producto/create').default,
+        beforeEnter: (to, from, next) => {
+            verificarAcceso(to, from, next);
+        }
+    },
 
     {
         path: '/usuario',

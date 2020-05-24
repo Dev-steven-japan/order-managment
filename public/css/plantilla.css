@@ -50,3 +50,7 @@
     max-height: 350px !important;
     overflow: auto !important;
 }
+
+.el-input-number {
+    width: 100% !important;
+}
