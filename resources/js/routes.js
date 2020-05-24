@@ -108,6 +108,15 @@ export const rutas = [{
             verificarAcceso(to, from, next);
         }
     },
+    {
+        path: '/producto/editar/:id',
+        name: 'producto.editar',
+        component: require('./components/modulos/producto/edit').default,
+        beforeEnter: (to, from, next) => {
+            verificarAcceso(to, from, next);
+        },
+        props: true
+    },
 
     {
         path: '/usuario',
