@@ -119,7 +119,7 @@
                         <li class="nav-header">REPORTES</li>
                         <li class="nav-item">
                             <template v-if="listPermisos.includes('reporte.pedido.index')">
-                                <router-link  class="nav-link" :to="'/pedido'">
+                                <router-link  class="nav-link" :to="'/reporte'">
                                     <i class="nav-icon fas fa-file-export"></i>
                                     <p>Pedidos</p>
                                 </router-link>

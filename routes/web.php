@@ -37,6 +37,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/configuracion/producto/getListarProductos', 'Configuracion\ProductsController@getListarProductos');
     Route::post('/configuracion/producto/setRegistrarProducto', 'Configuracion\ProductsController@setRegistrarProducto');
     Route::post('/configuracion/producto/setEditarProducto', 'Configuracion\ProductsController@setEditarProducto');
+
+    Route::get('/operacion/pedido/getListarPedidos', 'Operacion\OrdersController@getListarPedidos');
 });
 
 Route::get('/{optional?}', function () {

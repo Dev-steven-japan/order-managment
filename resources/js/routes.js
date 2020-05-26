@@ -216,7 +216,7 @@ export const rutas = [{
 
     {
         path: '/reporte',
-        name: 'reporte.index',
+        name: 'reporte.pedido.index',
         component: require('./components/modulos/reporte/index').default,
         beforeEnter: (to, from, next) => {
             verificarAcceso(to, from, next);
