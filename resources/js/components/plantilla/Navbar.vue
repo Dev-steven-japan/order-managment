@@ -158,7 +158,7 @@
             },
             createFilter(queryString) {
                 return (link) => {
-                    return (link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+                    return (link.value.toLowerCase().indexOf(queryString.toLowerCase()) != -1);
                 };
             },
             getListarRolPermisosByUsuario(){
@@ -170,6 +170,13 @@
                 }).then( response => {
                     this.listRolPermisosByUsuario = response.data;
                     this.filterListarRolPermisosByUsuario();
+                }).catch(error => {
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        this.fullscreenLoading = false;
+                    }
                 })
             },
             filterListarRolPermisosByUsuario() {

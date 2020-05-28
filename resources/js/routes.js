@@ -49,6 +49,7 @@ export const rutas = [{
             verificarAcceso(to, from, next);
         }
     },
+
     {
         path: '/pedido',
         name: 'pedido.index',
@@ -57,6 +58,15 @@ export const rutas = [{
             verificarAcceso(to, from, next);
         }
     },
+    {
+        path: '/pedido/crear',
+        name: 'pedido.crear',
+        component: require('./components/modulos/pedido/create').default,
+        beforeEnter: (to, from, next) => {
+            verificarAcceso(to, from, next);
+        }
+    },
+
     {
         path: '/cliente',
         name: 'cliente.index',

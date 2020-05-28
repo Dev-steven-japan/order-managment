@@ -8,15 +8,33 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+/**
+ * ElementUI - biblioteca para interfaz usuario
+ */
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/es'
 
 Vue.use(ElementUI, { locale })
 
+/**
+ * SweetAlert2 - biblioteca para ventanas emergentes
+ */
 import Swal from 'sweetalert2'
 window.Swal = Swal;
 
+/**
+ * Vuesax - biblioteca para interfaz de usuario
+ */
+import Vuesax from 'vuesax'
+import 'vuesax/dist/vuesax.css' //Vuesax styles
+Vue.use(Vuesax, {
+    // options here
+})
+
+/**
+ * EventBus - biblioteca para comunicacion entre componentes
+ */
 export const EventBus = new Vue();
 window.EventBus = EventBus;
 
