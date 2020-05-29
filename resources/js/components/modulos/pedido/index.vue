@@ -107,6 +107,7 @@
                                                 <td v-text="item.documento"></td>
                                                 <td v-text="item.cliente"></td>
                                                 <td v-text="item.total"></td>
+                                                <td v-text="item.vendedor"></td>
                                                 <td v-text="item.estado"></td>
                                                 <td>
                                                     <template v-if="listRolPermisosByUsuario.includes('pedido.ver')">

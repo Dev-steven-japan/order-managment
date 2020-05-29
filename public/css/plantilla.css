@@ -63,3 +63,7 @@
     width: 100% !important;
     border-radius: 1px !important;
 }
+
+.vs-tooltip-content {
+    width: min-content !important;
+}
