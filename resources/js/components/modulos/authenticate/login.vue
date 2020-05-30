@@ -12,20 +12,18 @@
 
                 <form method="post">
                     <div class="input-group mb-3">
-                        <input type="email" @keyup.enter="login" v-model="fillLogin.cEmail" class="form-control" placeholder="Email">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
-                            </div>
-                        </div>
+                        <vs-input :state="(error)?'danger':''" icon-after @keyup.enter="login" v-model="fillLogin.cEmail" placeholder="Correo Electronico">
+                            <template #icon>
+                                <i class='fas fa-envelope'></i>
+                            </template>
+                        </vs-input>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" @keyup.enter="login" v-model="fillLogin.cContrasena" class="form-control" placeholder="Password">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
-                            </div>
-                        </div>
+                        <vs-input :state="(error)?'danger':''" type="password" icon-after @keyup.enter="login" v-model="fillLogin.cContrasena" placeholder="Contraseña">
+                            <template #icon>
+                                <i class='fas fa-lock'></i>
+                            </template>
+                        </vs-input>
                     </div>
                 </form>
 
@@ -38,7 +36,7 @@
                 </div>
 
                 <div class="social-auth-links text-center mb-3">
-                    <button class="btn btn-flat btn-block btn-danger" @click.prevent="login" v-loading.fullscreen.lock="fullscreenLoading">
+                    <button class="btn btn-flat btn-block btn-danger" @click.prevent="login">
                         Iniciar Sesión
                     </button>
                 </div>
@@ -67,7 +65,12 @@
                 if (this.validarLogin()) {
                     return;
                 }
-                this.fullscreenLoading = true;
+                const loading = this.$vs.loading({
+                    type: 'square',
+                    color: '#D5397B',
+                    background: '#FFFFFF',
+                    text: 'Cargando...'
+                })
                 var url = '/authenticate/login'
                 axios.post(url, {
                     'cEmail'        : this.fillLogin.cEmail,
@@ -81,7 +84,9 @@
                         // this.loginSuccess();
                         this.getListarRolPermisosByUsuario(response.data.authUser)
                     }
-                    this.fullscreenLoading = false;
+                    setTimeout(() => {
+                        loading.close()
+                    }, 2000)
                 })
             },
             getListarRolPermisosByUsuario(authUser){
