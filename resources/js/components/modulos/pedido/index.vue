@@ -58,7 +58,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Estado</label>
                                                 <div class="col-md-9">
-                                                    <el-select  v-model="fillBsqPedido.nIdEstado"
+                                                    <el-select  v-model="fillBsqPedido.cEstado"
                                                                 placeholder="Seleccione un Estado"
                                                                 clearable>
                                                         <el-option
@@ -108,7 +108,10 @@
                                                 <td v-text="item.cliente"></td>
                                                 <td v-text="item.total"></td>
                                                 <td v-text="item.vendedor"></td>
-                                                <td v-text="item.estado"></td>
+                                                <td>
+                                                    <span v-if="item.state == 'A'" class="badge badge-success" v-text="item.estado"></span>
+                                                    <span v-else class="badge badge-danger" v-text="item.estado"></span>
+                                                </td>
                                                 <td>
                                                     <template v-if="listRolPermisosByUsuario.includes('pedido.ver')">
                                                         <button class="btn btn-flat btn-info btn-sm" @click.prevent="setGenerarDocumento(item.id)">
@@ -161,7 +164,7 @@
                     cNombre : '',
                     cDocumento: '',
                     cPedido: '',
-                    nIdEstado: ''
+                    cEstado: ''
                 },
                 listPedidos: [],
                 listEstados: [
@@ -224,7 +227,7 @@
                 this.fillBsqPedido.cNombre      =   '';
                 this.fillBsqPedido.cDocumento   =   '';
                 this.fillBsqPedido.cPedido      =   '';
-                this.fillBsqPedido.nIdEstado    =   '';
+                this.fillBsqPedido.cEstado    =   '';
             },
             limpiarBandejaUsuarios(){
                 this.listPedidos   =   [];
@@ -238,7 +241,7 @@
                         'cNombre'       :   this.fillBsqPedido.cNombre,
                         'cDocumento'    :   this.fillBsqPedido.cDocumento,
                         'cPedido'       :   this.fillBsqPedido.cPedido,
-                        'nIdEstado'     :   this.fillBsqPedido.nIdEstado,
+                        'cEstado'     :   this.fillBsqPedido.cEstado,
                     }
                 }).then(response => {
                     this.inicializarPaginacion();
