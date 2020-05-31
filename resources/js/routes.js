@@ -75,6 +75,14 @@ export const rutas = [{
             verificarAcceso(to, from, next);
         }
     },
+    {
+        path: '/cliente/crear',
+        name: 'cliente.crear',
+        component: require('./components/modulos/cliente/create').default,
+        beforeEnter: (to, from, next) => {
+            verificarAcceso(to, from, next);
+        }
+    },
 
     {
         path: '/categoria',

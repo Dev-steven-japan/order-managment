@@ -68,6 +68,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Nombre</th>
+                                                <th>Documento</th>
                                                 <th>Correo</th>
                                                 <th>Teléfono</th>
                                                 <th>Acciones</th>
@@ -76,6 +77,7 @@
                                         <tbody>
                                             <tr v-for="(item, index) in listarClientesPaginated" :key="index">
                                                 <td v-text="item.fullname"></td>
+                                                <td v-text="item.document"></td>
                                                 <td v-text="item.email"></td>
                                                 <td v-text="item.phone"></td>
                                                 <td>
