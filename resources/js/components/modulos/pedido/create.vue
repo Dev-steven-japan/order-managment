@@ -107,7 +107,7 @@
                                     </div>
                                     <div class="card-footer">
                                         <div class="row">
-                                            <button v-if="fTotalPedido > 0 && listPedidos.length > 0" class="btn btn-flat btn-info btnFull" @click.prevent="setRegistrarPedido" v-loading.fullscreen.lock="fullscreenLoading">Registrar</button>
+                                            <button v-if="fTotalPedido > 0 && listPedidos.length > 0" class="btn btn-flat btn-info btnFull" @click.prevent="setRegistrarPedido">Registrar</button>
                                         </div>
                                     </div>
                                 </div>
@@ -444,7 +444,12 @@
                     this.modalShow = true;
                     return;
                 }
-                this.fullscreenLoading = true;
+                const loading = this.$vs.loading({
+                    type: 'square',
+                    color: '#D5397B',
+                    background: '#FFFFFF',
+                    text: 'Cargando...'
+                })
 
                 if (this.switchCliente) {
                     this.setRegistrarCliente();
@@ -474,7 +479,6 @@
                 })
             },
             setGuardarPedido(nIdCliente){
-
                 var url = '/operacion/pedido/setRegistrarPedido'
                 axios.post(url, {
                     'nIdCliente'    :   nIdCliente,
@@ -482,7 +486,28 @@
                     'fTotalPedido'  :   this.fTotalPedido,
                     'listPedido'    :   this.listPedidos
                 }).then(response => {
-                    this.fullscreenLoading = false;
+                    this.setGenerarDocumento(response.data);
+                }).catch(error => {
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        this.fullscreenLoading = false;
+                    }
+                })
+            },
+            setGenerarDocumento(nIdPedido){
+                var config = {
+                    responseType: 'blob'
+                }
+                var url = '/operacion/pedido/setGenerarDocumento'
+                axios.post(url, {
+                    'nIdPedido'       :   nIdPedido
+                }, config).then(response => {
+                    var oMyBlob = new Blob([response.data], {type : 'application/pdf'}); // the blob
+                    var url = URL.createObjectURL(oMyBlob);
+                    window.open(url)
+                    loading.close()
                     this.$router.push('/pedido')
                 }).catch(error => {
                     if (error.response.status == 401) {

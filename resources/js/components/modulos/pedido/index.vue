@@ -111,7 +111,7 @@
                                                 <td v-text="item.estado"></td>
                                                 <td>
                                                     <template v-if="listRolPermisosByUsuario.includes('pedido.ver')">
-                                                        <button class="btn btn-flat btn-info btn-sm">
+                                                        <button class="btn btn-flat btn-info btn-sm" @click.prevent="setGenerarDocumento(item.id)">
                                                             <i class="far fa-file-pdf"></i> Ver PDF
                                                         </button>
                                                     </template>
@@ -244,6 +244,34 @@
                     this.inicializarPaginacion();
                     this.listPedidos   =   response.data;
                     this.fullscreenLoading = false;
+                }).catch(error => {
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        this.fullscreenLoading = false;
+                    }
+                })
+            },
+            setGenerarDocumento(nIdPedido){
+                const loading = this.$vs.loading({
+                    type: 'square',
+                    color: '#D5397B',
+                    background: '#FFFFFF',
+                    text: 'Cargando...'
+                })
+
+                var config = {
+                    responseType: 'blob'
+                }
+                var url = '/operacion/pedido/setGenerarDocumento'
+                axios.post(url, {
+                    'nIdPedido'       :   nIdPedido
+                }, config).then(response => {
+                    var oMyBlob = new Blob([response.data], {type : 'application/pdf'}); // the blob
+                    var url = URL.createObjectURL(oMyBlob);
+                    window.open(url)
+                    loading.close()
                 }).catch(error => {
                     if (error.response.status == 401) {
                         this.$router.push({name: 'login'})

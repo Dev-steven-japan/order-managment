@@ -40,6 +40,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/operacion/pedido/getListarPedidos', 'Operacion\OrdersController@getListarPedidos');
     Route::post('/operacion/pedido/setRegistrarPedido', 'Operacion\OrdersController@setRegistrarPedido');
+    Route::post('/operacion/pedido/setGenerarDocumento', 'Operacion\OrdersController@setGenerarDocumento');
 
     Route::get('/operacion/cliente/getListarClientes', 'Operacion\CustomersController@getListarClientes');
     Route::post('/operacion/cliente/setRegistrarCliente', 'Operacion\CustomersController@setRegistrarCliente');

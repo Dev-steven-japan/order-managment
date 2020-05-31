@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Operacion;
 
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -72,9 +73,36 @@ class OrdersController extends Controller
                 }
             }
             DB::commit();
+            return $nIdPedido;
         } catch (Exception $e) {
             // capturara algun error ocurrido en el "try"
             DB::rollBack();
         }
+    }
+
+    public function setGenerarDocumento(Request $request)
+    {
+        if(!$request->ajax()) return redirect('/');
+
+        $nIdPedido  =   $request->nIdPedido;
+
+        $logo       =   public_path('img/AdminLTELogo.png');
+
+        $rpta1       =   DB::select('call sp_Pedido_getPedido (?)',
+                                                                    [
+                                                                        $nIdPedido
+                                                                    ]);
+
+        $rpta2       =   DB::select('call sp_Pedido_getDetallePedido (?)',
+                                                                    [
+                                                                        $nIdPedido
+                                                                    ]);
+
+        $pdf = PDF::loadView('reportes.pedido.pdf.ver', [
+            'rpta1' =>  $rpta1,
+            'rpta2' =>  $rpta2,
+            'logo'  =>  $logo
+        ]);
+        return $pdf->download('invoice.pdf');
     }
 }
