@@ -116,7 +116,7 @@
                                                         </button>
                                                     </template>
                                                     <template v-if="listRolPermisosByUsuario.includes('pedido.rechazar')">
-                                                        <button class="btn btn-flat btn-danger btn-sm">
+                                                        <button v-if="item.state == 'A'" class="btn btn-flat btn-danger btn-sm" @click.prevent="setCambiarEstadoPedido(1, item.id)">
                                                             <i class="fas fa-trash"></i> Rechazar
                                                         </button>
                                                     </template>
@@ -278,6 +278,41 @@
                         location.reload();
                         sessionStorage.clear();
                         this.fullscreenLoading = false;
+                    }
+                })
+            },
+            setCambiarEstadoPedido(op, id){
+                Swal.fire({
+                    title: '¿Está seguro de ' + ((op == 1) ? 'rechazar' : 'activar') + ' el pedido?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: ((op == 1) ? 'Si, rechazar' : 'Si, activar')
+                }).then((result) => {
+                    if (result.value) {
+                        // Aquí ira la confirmación del boton, es decir la petición al servidor
+                        this.fullscreenLoading = true;
+                        var url = '/operacion/pedido/setCambiarEstadoPedido'
+                        axios.post(url, {
+                            'nIdPedido' : id,
+                            'cEstado'    : (op == 1) ? 'I' : 'A'
+                        }).then(response => {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Se ' + ((op == 1) ? 'rechazo' : 'activo') + ' el pedido',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                            this.getListarPedidos();
+                        }).catch(error => {
+                            if (error.response.status == 401) {
+                                this.$router.push({name: 'login'})
+                                location.reload();
+                                sessionStorage.clear();
+                                this.fullscreenLoading = false;
+                            }
+                        })
                     }
                 })
             },
