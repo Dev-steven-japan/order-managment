@@ -13,7 +13,16 @@ class CustomersController extends Controller
     {
         if(!$request->ajax()) return redirect('/');
 
-        $rpta       =   DB::select('call sp_Cliente_getListarClientes');
+        $cNombre    =   $request->cNombre;
+        $cDocumento =   $request->cDocumento;
+
+        $cNombre    =   ($cNombre   ==  NULL) ? ($cNombre   =   '') :   $cNombre;
+        $cDocumento =   ($cDocumento   ==  NULL) ? ($cDocumento   =   '') :   $cDocumento;
+
+        $rpta       =   DB::select('call sp_Cliente_getListarClientes (?, ?)', [
+                                                                            $cNombre,
+                                                                            $cDocumento
+                                                                        ]);
         return $rpta;
     }
 
