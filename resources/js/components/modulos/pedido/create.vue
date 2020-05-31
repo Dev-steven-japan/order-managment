@@ -250,6 +250,7 @@
                 fTotalPedido: 0,
 
                 fullscreenLoading: false,
+                loading: '',
                 modalShow: false,
                 mostrarModal: {
                     display: 'block',
@@ -444,7 +445,7 @@
                     this.modalShow = true;
                     return;
                 }
-                const loading = this.$vs.loading({
+                this.loading = this.$vs.loading({
                     type: 'square',
                     color: '#D5397B',
                     background: '#FFFFFF',
@@ -507,9 +508,10 @@
                     var oMyBlob = new Blob([response.data], {type : 'application/pdf'}); // the blob
                     var url = URL.createObjectURL(oMyBlob);
                     window.open(url)
-                    loading.close()
+                    this.loading.close()
                     this.$router.push('/pedido')
                 }).catch(error => {
+                    console.log(error)
                     if (error.response.status == 401) {
                         this.$router.push({name: 'login'})
                         location.reload();
