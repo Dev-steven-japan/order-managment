@@ -487,8 +487,24 @@
                     'fTotalPedido'  :   this.fTotalPedido,
                     'listPedido'    :   this.listPedidos
                 }).then(response => {
-                    this.setGenerarDocumento(response.data);
+                    this.setGenerarEmail(response.data);
                 }).catch(error => {
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        this.fullscreenLoading = false;
+                    }
+                })
+            },
+            setGenerarEmail(nIdPedido){
+                var url = '/operacion/pedido/setGenerarEmail'
+                axios.post(url, {
+                    'nIdPedido'       :   nIdPedido
+                }).then(response => {
+                    this.setGenerarDocumento(nIdPedido)
+                }).catch(error => {
+                    console.log(error)
                     if (error.response.status == 401) {
                         this.$router.push({name: 'login'})
                         location.reload();

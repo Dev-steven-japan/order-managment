@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Operacion;
 
 use PDF;
+use App\Mail\PedidoCrear;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class OrdersController extends Controller
 {
@@ -123,5 +125,28 @@ class OrdersController extends Controller
                                                                     $cEstado,
                                                                     $nIdAuthUser
                                                                 ]);
+    }
+
+    public function setGenerarEmail(Request $request)
+    {
+        if(!$request->ajax()) return redirect('/');
+
+        $nIdPedido  =   $request->nIdPedido;
+
+        $logo       =   asset('img/AdminLTELogo.png');
+
+        $rpta1       =   DB::select('call sp_Pedido_getPedido (?)',
+                                                                    [
+                                                                        $nIdPedido
+                                                                    ]);
+
+        $rpta2       =   DB::select('call sp_Pedido_getDetallePedido (?)',
+                                                                    [
+                                                                        $nIdPedido
+                                                                    ]);
+
+        if ($rpta1[0]->cCorreo) {
+            Mail::to($rpta1[0]->cCorreo)->send(new PedidoCrear($rpta1, $rpta2, $logo));
+        }
     }
 }
