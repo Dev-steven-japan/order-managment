@@ -3,6 +3,7 @@
 Route::post('/authenticate/login', 'Auth\LoginController@login');
 
 Route::group(['middleware' => ['auth']], function () {
+
     Route::post('/authenticate/logout', 'Auth\LoginController@logout');
     Route::get('/authenticate/getRefrescarUsuarioAutenticado', function () {
         return Auth::user()->load('file');

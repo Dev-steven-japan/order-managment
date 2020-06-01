@@ -22,7 +22,7 @@ class PedidoCrear extends Mailable
     {
         $this->rpta1 = $rpta1;
         $this->rpta2 = $rpta2;
-        $this->logo = $logo;
+        $this->logo  = $logo;
     }
 
     /**
@@ -39,6 +39,7 @@ class PedidoCrear extends Mailable
                         'rpta1' =>  $this->rpta1,
                         'rpta2' =>  $this->rpta2,
                         'logo'  =>  $this->logo
-                    ]);
+                    ])
+                    ->attach($this->logo);
     }
 }

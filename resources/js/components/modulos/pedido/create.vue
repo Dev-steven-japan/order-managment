@@ -500,7 +500,7 @@
             setGenerarEmail(nIdPedido){
                 var url = '/operacion/pedido/setGenerarEmail'
                 axios.post(url, {
-                    'nIdPedido'       :   nIdPedido
+                    'nIdPedido' :   nIdPedido
                 }).then(response => {
                     this.setGenerarDocumento(nIdPedido)
                 }).catch(error => {

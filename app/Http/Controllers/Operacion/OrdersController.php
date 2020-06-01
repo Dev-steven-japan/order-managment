@@ -135,12 +135,12 @@ class OrdersController extends Controller
 
         $logo       =   asset('img/AdminLTELogo.png');
 
-        $rpta1       =   DB::select('call sp_Pedido_getPedido (?)',
+        $rpta1      =   DB::select('call sp_Pedido_getPedido (?)',
                                                                     [
                                                                         $nIdPedido
                                                                     ]);
 
-        $rpta2       =   DB::select('call sp_Pedido_getDetallePedido (?)',
+        $rpta2      =   DB::select('call sp_Pedido_getDetallePedido (?)',
                                                                     [
                                                                         $nIdPedido
                                                                     ]);
