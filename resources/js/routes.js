@@ -83,6 +83,15 @@ export const rutas = [{
             verificarAcceso(to, from, next);
         }
     },
+    {
+        path: '/cliente/editar/:id',
+        name: 'cliente.editar',
+        component: require('./components/modulos/cliente/edit').default,
+        beforeEnter: (to, from, next) => {
+            verificarAcceso(to, from, next);
+        },
+        props: true
+    },
 
     {
         path: '/categoria',

@@ -45,6 +45,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/operacion/cliente/getListarClientes', 'Operacion\CustomersController@getListarClientes');
     Route::post('/operacion/cliente/setRegistrarCliente', 'Operacion\CustomersController@setRegistrarCliente');
+    Route::post('/operacion/cliente/setEditarCliente', 'Operacion\CustomersController@setEditarCliente');
 });
 
 Route::get('/{optional?}', function () {
