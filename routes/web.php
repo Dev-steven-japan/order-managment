@@ -51,6 +51,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/dashboard/getProductosMasVendidos', 'DashboardController@getProductosMasVendidos');
     Route::get('/dashboard/getVentasPorDia', 'DashboardController@getVentasPorDia');
+
+    Route::get('/chat/getListarContactos', 'ChatsController@getListarContactos');
+    Route::get('/chat/getListarConversaciones', 'ChatsController@getListarConversaciones');
+    Route::post('/chat/setRegistrarMensaje', 'ChatsController@setRegistrarMensaje');
 });
 
 Route::get('/{optional?}', function () {
