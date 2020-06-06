@@ -115,6 +115,12 @@
                     this.setNuevoMensaje(mensaje)
                 }
 
+                var sound = new Howl({
+                    src: ['/ringtone/notificacion.mp3']
+                });
+
+                sound.play();
+
                 //Notificacion
                 const noti = this.$vs.notification({
                     square: true,

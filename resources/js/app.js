@@ -38,6 +38,9 @@ Vue.use(Vuesax, {
 export const EventBus = new Vue();
 window.EventBus = EventBus;
 
+import Howler from 'howler'
+window.Howler = Howler;
+
 Vue.component('App', require('./components/App.vue').default);
 Vue.component('Auth', require('./components/Auth.vue').default);
 

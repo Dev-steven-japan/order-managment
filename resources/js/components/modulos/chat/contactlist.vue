@@ -15,7 +15,7 @@
                             <small class="contacts-list-date float-right contact-notification">{{item.nNumeroMensajeNoLeidos}}</small>
                         </span>
                         <span v-if="typing.state == true && typing.usuario == item.id" class="contacts-list-msg">Está escribiendo ...</span>
-                        <span v-else class="contacts-list-msg">{{item.cUltimoMensajeNoLeido}}</span>
+                        <span v-else class="contacts-list-msg">{{(!item.cUltimoMensajeNoLeido) ? '' : item.cUltimoMensajeNoLeido.slice(0, 30)+ '...'}}</span>
                     </div>
                     <!-- /.contacts-list-info -->
                 </a>
