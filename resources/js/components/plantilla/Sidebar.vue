@@ -142,6 +142,13 @@
                 fullscreenLoading: false
             }
         },
+        mounted() {
+            Echo.private(`logout.user.${this.usuario.id}`)
+                .listen('Logout', (e) => {
+                    // console.log(e)
+                    this.logout();
+                });
+        },
         methods: {
             logout(){
                 this.fullscreenLoading = true;
