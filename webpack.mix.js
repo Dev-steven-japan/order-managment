@@ -23,3 +23,5 @@ mix.styles([
     ], 'public/js/plantilla.js')
     .copy('resources/vendor/fontawesome/webfonts', 'public/webfonts')
     .copy('resources/vendor/img', 'public/img');
+
+mix.browserSync('http://laravelvue.com/');
