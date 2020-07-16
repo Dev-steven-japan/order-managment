@@ -5,7 +5,9 @@
             <div class="direct-chat-msg " v-for="(item, index) in mensajes" :key="index" :class="(item.to == contacto.id) ? '' : 'right'">
                 <div class="direct-chat-infos clearfix">
                     <span class="direct-chat-name " :class="(item.to == contacto.id) ? 'float-left' : 'float-right'" v-text="item.usu_from_fullname"></span>
-                    <span class="direct-chat-timestamp " :class="(item.to == contacto.id) ? 'float-right' : 'float-left'" v-text="item.created_at"></span>
+                    <span class="direct-chat-timestamp " :class="(item.to == contacto.id) ? 'float-right' : 'float-left'">
+                        {{ moment(item.created_at).format('MMMM Do YYYY, h:mm:ss a') }}
+                    </span>
                 </div>
                 <!-- /.direct-chat-infos -->
                 <img v-if="!item.usu_from_profile_image" class="direct-chat-img" src="/img/user1-128x128.jpg" alt="message user image">
@@ -51,6 +53,11 @@
             //Ante un cambio en e prop Contacto que ejecute el metodo scrollToBotom
             contacto(){
                 this.scrollToBotom();
+            }
+        },
+        data() {
+            return {
+                moment: moment
             }
         },
         methods: {

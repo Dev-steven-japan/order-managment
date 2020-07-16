@@ -47,7 +47,7 @@
                         </template>
                     </li>
 
-                    <template v-if="listPermisos.includes('pedido.index', 'cliente.index')">
+                    <template v-if="listPermisos.includes('pedido.index')|| listPermisos.includes('cliente.index')">
                         <li class="nav-header">OPERACIONES</li>
                         <li class="nav-item">
                             <template v-if="listPermisos.includes('pedido.index')">
@@ -67,7 +67,7 @@
                         </li>
                     </template>
 
-                    <template v-if="listPermisos.includes('categoria.index', 'producto.index')">
+                    <template v-if="listPermisos.includes('categoria.index') || listPermisos.includes('producto.index')">
                         <li class="nav-header">CONFIGURACION</li>
                         <li class="nav-item">
                             <template v-if="listPermisos.includes('categoria.index')">
@@ -87,7 +87,7 @@
                         </li>
                     </template>
 
-                    <template v-if="listPermisos.includes('usuario.index', 'rol.index', 'permiso.index')">
+                    <template v-if="listPermisos.includes('usuario.index') || listPermisos.includes('rol.index') || listPermisos.includes('permiso.index')">
                         <li class="nav-header">ADMINISTRACIÓN</li>
                         <li class="nav-item">
                             <template v-if="listPermisos.includes('usuario.index')">

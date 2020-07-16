@@ -38,8 +38,18 @@ Vue.use(Vuesax, {
 export const EventBus = new Vue();
 window.EventBus = EventBus;
 
+/**
+ * Howler - Biblioteca para reproducir audio desde el lado del cliente
+ */
 import Howler from 'howler'
 window.Howler = Howler;
+
+/**
+ * moment- Biblioteca para formatear fechas y horas
+ */
+import moment from 'moment';
+moment.locale('es');
+window.moment = moment;
 
 Vue.component('App', require('./components/App.vue').default);
 Vue.component('Auth', require('./components/Auth.vue').default);
