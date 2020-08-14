@@ -83,5 +83,8 @@
 </script>
 
 <style>
-
+    #EmojiPicker{
+        position: absolute;
+        margin-top: -29.5rem;
+    }
 </style>
