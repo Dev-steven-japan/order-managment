@@ -2,8 +2,8 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="#" class="brand-link">
-            <img :src="ruta + '/img/adminLTELogo.png'" alt="Sistema Laravel y Vue" class="brand-image img-circle elevation-3" style="opacity: .8">
-            <span class="brand-text font-weight-light">Sistema Laravel y Vue</span>
+            <img :src="ruta + '/img/LogoGold.png'" alt="Laravel & VueJS" class="brand-image elevation-3">
+            <span class="brand-text font-weight-light">Laravel y VueJS</span>
         </a>
 
         <!-- Sidebar -->

@@ -17,7 +17,6 @@ class CreateOrdersTable extends Migration
             $table->bigIncrements('id');
             $table->string('order_number')->nullable();
             $table->string('comments')->nullable();
-
             $table->bigInteger('customer_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
             $table->double('total', 4, 2)->default(10.50);

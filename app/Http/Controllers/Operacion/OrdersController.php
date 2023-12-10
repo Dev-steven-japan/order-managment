@@ -88,7 +88,7 @@ class OrdersController extends Controller
 
         $nIdPedido  =   $request->nIdPedido;
 
-        $logo       =   public_path('img/AdminLTELogo.png');
+        $logo       =   public_path('img/LogoGold.png');
 
         $rpta1       =   DB::select('call sp_Pedido_getPedido (?)',
                                                                     [
@@ -133,7 +133,7 @@ class OrdersController extends Controller
 
         $nIdPedido  =   $request->nIdPedido;
 
-        $logo       =   asset('img/AdminLTELogo.png');
+        $logo       =   asset('img/LogoGold.png');
 
         $rpta1      =   DB::select('call sp_Pedido_getPedido (?)',
                                                                     [

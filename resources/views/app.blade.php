@@ -7,9 +7,9 @@
     <div class="wrapper" id="app">
 
         @if (Auth::check())
-            <App ruta="{{route('basepath')}}" :usuario="{{Auth::user()->load('file')}}" ></App>
+            <App ruta="{{ route('basepath') }}" :usuario="{{ Auth::user()->load('file') }}"></App>
         @else
-            <Auth ruta="{{route('basepath')}}"></Auth>
+            <Auth ruta="{{ route('basepath') }}"></Auth>
         @endif
     </div>
 
